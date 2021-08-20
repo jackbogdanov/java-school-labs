@@ -1,2 +1,8 @@
-package lab6.handlers;public interface EmailHandler {
+package lab6.handlers;
+
+import lab6.MailInfo;
+
+public interface EmailHandler {
+
+    void handleEmail(MailInfo info);
 }
