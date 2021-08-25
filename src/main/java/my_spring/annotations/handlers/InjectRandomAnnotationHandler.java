@@ -1,11 +1,13 @@
-package my_spring.annotations;
+package my_spring.annotations.handlers;
 
 import lection.adapter_lab.RandomUtil;
 import lombok.SneakyThrows;
+import my_spring.annotations.AnnotationsHandler;
+import my_spring.annotations.InjectRandomInt;
 
 import java.lang.reflect.Field;
 
-public class InjectRandomAnnotationHandler implements AnnotationsHandler{
+public class InjectRandomAnnotationHandler implements AnnotationsHandler {
 
     @Override
     @SneakyThrows
@@ -20,8 +22,6 @@ public class InjectRandomAnnotationHandler implements AnnotationsHandler{
 
                 field.setInt(t, RandomUtil.between(min, max));
             }
-
-            field.setAccessible(false);
         }
     }
 }

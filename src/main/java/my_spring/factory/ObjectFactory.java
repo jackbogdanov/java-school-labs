@@ -1,23 +1,19 @@
 package my_spring.factory;
 
-import lection.adapter_lab.RandomUtil;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import my_spring.Config;
-import my_spring.annotations.AnnotationsEnum;
-import my_spring.annotations.Inject;
-import my_spring.annotations.InjectRandomInt;
-
-import java.lang.reflect.Field;
-import java.util.Arrays;
+import my_spring.annotations.*;
 
 /**
  * @author Evgeny Borisov
  */
 public class ObjectFactory {
+
     @Getter
     private static ObjectFactory instance = new ObjectFactory();
     private Config config = new JavaConfig();
+    private AnnotationsHandlerProvider provider = new AnnotationsHandlerProvider();
 
     @SneakyThrows
     public <T> T createObject(Class<T> type) {
@@ -27,8 +23,8 @@ public class ObjectFactory {
 
         T t = type.getDeclaredConstructor().newInstance();
 
-        for (AnnotationsEnum annotation : AnnotationsEnum.values()) {
-            annotation.runHandler(t);
+        for (AnnotationsHandler handler : provider.getHandlers()) {
+            handler.handle(t);
         }
 
         return t;

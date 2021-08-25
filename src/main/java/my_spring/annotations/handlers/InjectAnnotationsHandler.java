@@ -1,7 +1,9 @@
-package my_spring.annotations;
+package my_spring.annotations.handlers;
 
 
 import lombok.SneakyThrows;
+import my_spring.annotations.AnnotationsHandler;
+import my_spring.annotations.Inject;
 import my_spring.factory.ObjectFactory;
 
 import java.lang.reflect.Field;
@@ -17,7 +19,6 @@ public class InjectAnnotationsHandler implements AnnotationsHandler {
             if (injectAnnotation != null) {
                 field.setAccessible(true);
                 field.set(t, ObjectFactory.getInstance().createObject(field.getType()));
-                field.setAccessible(false);
             }
         }
     }
