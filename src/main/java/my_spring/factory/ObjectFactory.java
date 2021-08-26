@@ -30,12 +30,14 @@ public class ObjectFactory {
         }
 
         init(t);
-        return t;
+
+
+        return proxyPreprocess(t);
     }
 
     @SneakyThrows
     private void init(Object o) {
-        Method[] methods = o.getClass().getMethods();
+        Method[] methods = o.getClass().getDeclaredMethods();
 
         for (Method method : methods) {
             if (method.getName().startsWith("init")) {
@@ -44,5 +46,16 @@ public class ObjectFactory {
         }
     }
 
+    @SneakyThrows
+    private <T> T proxyPreprocess(T o) {
+        Class<?> objectClass = o.getClass();
+        Class<?> proxyClass = config.getProxyClass(objectClass);
+
+        if (proxyClass != null) {
+            return (T) proxyClass.getConstructor(objectClass).newInstance(o);
+        }
+
+        return o;
+    }
 
 }
