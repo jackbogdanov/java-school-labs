@@ -5,6 +5,8 @@ import lombok.SneakyThrows;
 import my_spring.Config;
 import my_spring.annotations.*;
 
+import java.lang.reflect.Method;
+
 /**
  * @author Evgeny Borisov
  */
@@ -27,10 +29,20 @@ public class ObjectFactory {
             handler.handle(t);
         }
 
+        init(t);
         return t;
     }
 
+    @SneakyThrows
+    private void init(Object o) {
+        Method[] methods = o.getClass().getMethods();
 
+        for (Method method : methods) {
+            if (method.getName().startsWith("init")) {
+                method.invoke(o);
+            }
+        }
+    }
 
 
 }
