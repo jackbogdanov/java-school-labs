@@ -13,7 +13,7 @@ public class ObjectFactory {
     @Getter
     private static ObjectFactory instance = new ObjectFactory();
     private Config config = new JavaConfig();
-    private AnnotationsHandlerProvider provider = new AnnotationsHandlerProvider();
+    private HandlerProvider provider = new BaseAnnotationsHandlerProvider();
 
     @SneakyThrows
     public <T> T createObject(Class<T> type) {
